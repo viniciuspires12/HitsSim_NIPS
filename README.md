@@ -1,6 +1,6 @@
 # HitsSim_NIPS
 
-Repositório do **Simulador de Pulsos TileCal** para a **DE10-Nano (Cyclone V SoC)**. Objetivo: permitir que qualquer novo membro rode o simulador em minutos, entenda a arquitetura e modifique parâmetros (ex.: **ocupação por canal**).
+Repositório do **Simulador de Pulsos TileCal** para a **DE10-Nano (Cyclone V SoC)**.
 
 > Testado com **Quartus Prime Lite 23.1std** (host) e **Linux na HPS** (Angstrom/Yocto). Adapte versões conforme seu ambiente.
 
@@ -30,4 +30,24 @@ Repositório do **Simulador de Pulsos TileCal** para a **DE10-Nano (Cyclone V So
 ---
 
 ## Estrutura do repositório
-- 
+
+```
+/
+├─ HPS_FPGA_Simulador_vX_DE10/                # Projeto do simulador em FPGA (Quartus/Qsys), baseado no CD-ROM
+│  ├─ Simulador_Arquivos/                     # Arquivos para o Gerador de Pulsos
+│  ├─ pll_40mhz/                              # Gerador de Clock de 40MHz
+│  ├─ pll_40mhz_sim/                          # Gerador de Clock de 40MHz
+│  └─ .../                                    # Demais arquivos gerados na compilação do Quartus
+├─ linux_image/                           # Imagem Linux p/ HPS (SD) já com programas/scripts prontos
+│  └─ README.md                           # Passo a passo para criar um cartão SD "bootável" e iniciar a placa.
+├─ board_cdrom/                       # Conteúdo original do CD-ROM da DE10-Nano (referência)
+│  └─ ...                             # Exemplos, guias e utilitários de fábrica
+├─ toolchain/                     # Arquivos p/ compilar binários e enviar p/ a placa
+│  ├─ examples/                   # Exemplos (mmap, R/W registradores, SCP)
+│  ├─ Makefile                    # `make` compila e (opcional) faz deploy via scp
+│  └─ README.md                   # Passo a passo de configuração/uso
+└─ scripts/                   # Utilitários (habilitar bridges, carregar .rbf, checks)
+```
+
+
+
