@@ -8,43 +8,26 @@ Repositório do **Simulador de Pulsos TileCal** para a **DE10-Nano (Cyclone V So
 
 ## Sumário
 - [Visão rápida](#visão-rápida)
-- [Arquitetura (alto nível)](#arquitetura-alto-nível)
 - [Pré-requisitos](#pré-requisitos)
-- [Hello Run (10 minutos)](#hello-run-10-minutos)
 - [Estrutura do repositório](#estrutura-do-repositório)
-- [Mapa de registradores (resumo)](#mapa-de-registradores-resumo)
 - [Fluxos comuns](#fluxos-comuns)
 - [Dúvidas frequentes](#dúvidas-frequentes)
 - [Contribuindo](#contribuindo)
 - [Citação](#citação)
-- [Licença](#licença)
 
 ---
 
 ## Visão rápida
-- **Entrada**: parâmetros (ex.: ocupação ρ por canal, sementes RNG).  
-- **Processamento**: geração de hits → forma de pulso (shaper) → amostras.  
-- **Saída/Observação**: leitura por user-space na HPS (mmap/devmem) ou captura via script e envio ao host.
+- **Entrada**: parâmetros (ex.: ocupação, offset)   
+- **Saída/Observação**: leitura através de SignalTap Logic Analyser (ferramenta do Quartus)
 
 ---
 
-## Arquitetura (alto nível)
+## Pré-requisitos
+- **Hardware**: DE10-Nano (Cyclone V SoC) - Hardware C - placa com SoC FPGA integrando HPS ARM Cortex-A9 dual-core e lógica programável
+- **Software**: Quartus Prime Lite Edition — versão testada: 23.1std
 
-```mermaid
-flowchart LR
-  subgraph HPS [HPS (ARM/Linux)]
-    UI[User-space CLI / Scripts] --> RW[mmap/devmem]
-  end
+---
 
-  subgraph FPGA [FPGA (Cyclone V)]
-    RNG[RNG / Seeds]
-    OCC[Ocupação por canal]
-    GEN[Gerador de hits]
-    SHAPER[Shaper (FIR/IIR)]
-    BUF[Buffers / Registradores]
-  end
-
-  RW <--> BUF
-  RNG --> GEN
-  OCC --> GEN
-  GEN --> SHAPER --> BUF
+## Estrutura do repositório
+- 
