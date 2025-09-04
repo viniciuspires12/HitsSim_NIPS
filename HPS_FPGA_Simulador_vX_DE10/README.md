@@ -7,6 +7,9 @@ Projeto **Quartus/Platform Designer** do simulador de pulsos para **DE10-Nano (C
 HPS_FPGA_Simulador_v1_DE10/
 ├─ *.qpf / *.qsf           # Projeto Quartus
 ├─ output_files/           # Artefatos de build (.sof/.rbf)
+├─ Simulador_Arquivos/     # Arquivos para o Gerador de Pulsos
+├─ pll_40mhz/              # Gerador de Clock de 40MHz
+├─ pll_40mhz_sim/          # Gerador de Clock de 40MHz
 └─ ...
 ```
 
