@@ -1,11 +1,24 @@
 # linux_image
 
 Essa pasta contém a imagem Linux para a HPS (DE10-Nano) já com os programas e scripts necessários.
-Grave a imagem em um cartão SD, e insira o cartão na placa. 
+
+## Passo a passo rápido (TL;DR)
+1. **Crie** um cartão SD inicializável **(mín. 2 GB)** com a imagem compartilhada.  
+2. **Insira** o SD na **DE10-Nano**.  
+3. **MSEL**: deixe **todos os switches na posição “ON”**.  
+4. **Conecte** um **cabo Ethernet** à placa.  
+5. **Ligue** a placa.  
+6. O **Linux inicia** e **programa automaticamente a FPGA**.  
+7. **Descubra o IP** da placa (via **IP Scanner** ou pelo **console serial/COM**).  
+8. **Conecte por SSH** para comunicar com a placa.  
+9. **Login**: `root`  |  **Senha**: `simhits`.
+
+---
 
 ## Gravar a imagem no microSD
 
-> **Atenção:** substitua os dispositivos/arquivos pelos do seu ambiente. O cartão será APAGADO.
+> **Atenção:** substitua os dispositivos/arquivos pelos do seu ambiente. O cartão será **APAGADO**.  
+> **Requisito:** microSD de **2 GB (mínimo)**.
 
 ### Linux
 ```bash
@@ -36,13 +49,11 @@ diskutil eject /dev/diskN
 
 ---
 
-## Console serial (boot log e login)
-
-Método para acessar o sistema Linux via conexão serial.
+## Console serial (boot log, descobrir IP e login)
 
 Parâmetros: **115200 8N1**, sem fluxo de controle.
 
-1. Conecte o cabo **USB-UART** da DE10-Nano ao PC (ou um conversor USB-TTL nos pinos UART, se for o seu caso).
+1. Conecte o **USB-UART** da DE10-Nano ao PC.  
 2. Descubra a porta:
    - Linux: `ls /dev/ttyUSB* /dev/ttyACM*`
    - macOS: `ls /dev/tty.usb*`
@@ -51,34 +62,46 @@ Parâmetros: **115200 8N1**, sem fluxo de controle.
    - Linux/macOS (screen): `screen /dev/ttyUSB0 115200`
    - Linux (minicom): `sudo minicom -D /dev/ttyUSB0 -b 115200`
    - Windows: **PuTTY** → Serial → COMx @ 115200
-4. Alimente a placa e acompanhe o boot. Faça login (usuário/senha da sua imagem): 
-   - Usuário: root
-   - Senha: simhits
+4. **Ligue** a placa e acompanhe o boot. A imagem está configurada para **programar automaticamente a FPGA**.
+5. Faça **login**:
+   - **Usuário:** `root`
+   - **Senha:** `simhits`
+6. Para **descobrir o IP** pela serial:
+   ```bash
+   ip addr        # ou
+   hostname -I    # ou
+   connmanctl services
+   ```
 
-> Dica: para sair do `screen`, use `Ctrl+A` depois `K` e confirme.
+> Dica: para sair do `screen`, use `Ctrl+A`, depois `K` e confirme.
 
 ---
 
 ## Conexão por SSH (rede)
 
-Método para conectar ao sistema Linux via SSH.
-
-1. Conecte a DE10-Nano à rede via **Ethernet**.
-2. Obtenha o IP:
-   - Pelo serial, rode:  
-     ```bash
-     ip addr        # ou
-     hostname -I    # ou
-     connmanctl services
-     ```
-3. No seu computador:
+1. **Conecte** a DE10-Nano à **rede via Ethernet**.  
+2. **Descubra o IP** (via **IP Scanner** na sua rede ou pelo **console serial**, como acima).  
+3. No seu computador, conecte por **SSH**:
    ```bash
    ssh root@<IP_DA_PLACA>
-   # exemplo: ssh root@192.168.0.120
+   # exemplo:
+   ssh root@192.168.0.120
    ```
-4. (Opcional) Copie arquivos:
+4. Credenciais:
+   - **Usuário:** `root`
+   - **Senha:** `simhits`
+
+5. (Opcional) **Copiar arquivos** para a placa:
    ```bash
-   scp arquivo.bin root@<IP_DA_PLACA>:/<LOCAL_DE_DESTINO_NA_PLACA>
+   scp arquivo.bin root@<IP_DA_PLACA>:/<PASTA_DESTINO>
    ```
+
+---
+
+## Pós-boot (opcional)
+```bash
+# Habilitar bridges HPS↔FPGA (se necessário)
+for b in fpga2hps hps2fpga lwhps2fpga; do echo 1 | sudo tee /sys/class/fpga_bridge/$b/enable; done
+```
 
 
