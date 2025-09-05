@@ -24,7 +24,7 @@ Repositório do **Simulador de Pulsos TileCal** para a **DE10-Nano (Cyclone V So
 ---
 
 ## Pré-requisitos
-- **Hardware**: DE10-Nano (Cyclone V SoC) – Hardware C – SoC com **HPS ARM Cortex-A9 dual-core** + lógica programável  
+- **Hardware**: DE10-Nano (Cyclone V SoC) – Hardware C 
 - **Software**: **Quartus Prime Lite 23.1std** (ou compatível)
 
 ---
