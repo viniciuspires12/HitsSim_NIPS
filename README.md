@@ -96,6 +96,8 @@ Repositório do **Simulador de Pulsos TileCal** para a **DE10-Nano (Cyclone V So
 ## Contribuindo
 Atualize este README sempre que mudar o fluxo.
 
+12/09/2025 - Atualizando v2: Adicionada memória RAM como registrador de ocupação.
+
 
 
 
