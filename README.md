@@ -89,6 +89,33 @@ Repositório do **Simulador de Pulsos TileCal** para a **DE10-Nano (Cyclone V So
 - **Sem IP/SSH?** Verifique cabo Ethernet, DHCP da rede ou veja IP pela serial.  
 - **Sem dados no SignalTap?** Revise JTAG chain, clock, trigger e se a FPGA foi programada (auto-boot).
 
+- ## Erro `GLIBC_2.34 not found` na DE10-Nano (Angström)
+
+**Problema:** o binário foi compilado no PC e linkado contra uma GLIBC mais nova que a da placa.  
+**Solução (sem compilar na placa):** gerar **binário estático** no PC com **musl**.
+
+### Passo a passo (musl, recomendado)
+
+```bash
+# 1) Baixe o toolchain musl (ARMv7 hard-float)
+mkdir -p ~/toolchains && cd ~/toolchains
+wget https://musl.cc/arm-linux-musleabihf-cross.tgz || curl -LO https://musl.cc/arm-linux-musleabihf-cross.tgz
+tar xf arm-linux-musleabihf-cross.tgz
+export PATH="$PWD/arm-linux-musleabihf-cross/bin:$PATH"
+
+# 2) Compile estaticamente seu programa (ex.: main.c)
+cd /caminho/do/projeto
+arm-linux-musleabihf-gcc -static -O2 -s -o change_memory main.c
+
+# 3) Verifique que não depende de GLIBC do sistema
+file change_memory
+arm-linux-gnueabihf-objdump -p change_memory | grep GLIBC_ || echo "OK: sem dependências GLIBC"
+
+# 4) Envie e rode na DE10
+scp change_memory root@socfpga:/root/
+ssh root@socfpga ./change_memory
+```
+
 ---
 
 ## Contribuindo
