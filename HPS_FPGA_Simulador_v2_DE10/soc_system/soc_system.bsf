@@ -704,7 +704,7 @@ https://fpgasoftware.intel.com/eula.
 		(text "writedata" (rect 277 1355 608 2720)(font "Arial" (color 0 0 0)))
 		(text "reset" (rect 243 1371 516 2755)(font "Arial" (color 128 0 0)(font_size 9)))
 		(text "reset_n" (rect 277 1395 596 2800)(font "Arial" (color 0 0 0)))
-		(text " soc_system " (rect 696 1416 1464 2842)(font "Arial" ))
+		(text " system " (rect 717 1416 1482 2842)(font "Arial" ))
 		(line (pt 272 32)(pt 480 32)(line_width 1))
 		(line (pt 480 32)(pt 480 1416)(line_width 1))
 		(line (pt 272 1416)(pt 480 1416)(line_width 1))

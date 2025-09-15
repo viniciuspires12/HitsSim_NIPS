@@ -72,15 +72,15 @@
 		.memory_mem_odt                        (<connected-to-memory_mem_odt>),                        //                               .mem_odt
 		.memory_mem_dm                         (<connected-to-memory_mem_dm>),                         //                               .mem_dm
 		.memory_oct_rzqin                      (<connected-to-memory_oct_rzqin>),                      //                               .oct_rzqin
-		.reset_reset_n                         (<connected-to-reset_reset_n>),                         //                          reset.reset_n
+		.occ_ram_clk2_clk                      (<connected-to-occ_ram_clk2_clk>),                      //                   occ_ram_clk2.clk
+		.occ_ram_reset2_reset                  (<connected-to-occ_ram_reset2_reset>),                  //                 occ_ram_reset2.reset
+		.occ_ram_reset2_reset_req              (<connected-to-occ_ram_reset2_reset_req>),              //                               .reset_req
 		.occ_ram_s2_address                    (<connected-to-occ_ram_s2_address>),                    //                     occ_ram_s2.address
 		.occ_ram_s2_chipselect                 (<connected-to-occ_ram_s2_chipselect>),                 //                               .chipselect
 		.occ_ram_s2_clken                      (<connected-to-occ_ram_s2_clken>),                      //                               .clken
 		.occ_ram_s2_write                      (<connected-to-occ_ram_s2_write>),                      //                               .write
 		.occ_ram_s2_readdata                   (<connected-to-occ_ram_s2_readdata>),                   //                               .readdata
 		.occ_ram_s2_writedata                  (<connected-to-occ_ram_s2_writedata>),                  //                               .writedata
-		.occ_ram_clk2_clk                      (<connected-to-occ_ram_clk2_clk>),                      //                   occ_ram_clk2.clk
-		.occ_ram_reset2_reset                  (<connected-to-occ_ram_reset2_reset>),                  //                 occ_ram_reset2.reset
-		.occ_ram_reset2_reset_req              (<connected-to-occ_ram_reset2_reset_req>)               //                               .reset_req
+		.reset_reset_n                         (<connected-to-reset_reset_n>)                          //                          reset.reset_n
 	);
 

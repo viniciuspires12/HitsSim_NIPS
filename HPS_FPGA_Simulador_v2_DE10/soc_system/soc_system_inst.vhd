@@ -73,16 +73,16 @@
 			memory_mem_odt                        : out   std_logic;                                        -- mem_odt
 			memory_mem_dm                         : out   std_logic_vector(3 downto 0);                     -- mem_dm
 			memory_oct_rzqin                      : in    std_logic                     := 'X';             -- oct_rzqin
-			reset_reset_n                         : in    std_logic                     := 'X';             -- reset_n
+			occ_ram_clk2_clk                      : in    std_logic                     := 'X';             -- clk
+			occ_ram_reset2_reset                  : in    std_logic                     := 'X';             -- reset
+			occ_ram_reset2_reset_req              : in    std_logic                     := 'X';             -- reset_req
 			occ_ram_s2_address                    : in    std_logic_vector(6 downto 0)  := (others => 'X'); -- address
 			occ_ram_s2_chipselect                 : in    std_logic                     := 'X';             -- chipselect
 			occ_ram_s2_clken                      : in    std_logic                     := 'X';             -- clken
 			occ_ram_s2_write                      : in    std_logic                     := 'X';             -- write
 			occ_ram_s2_readdata                   : out   std_logic_vector(7 downto 0);                     -- readdata
 			occ_ram_s2_writedata                  : in    std_logic_vector(7 downto 0)  := (others => 'X'); -- writedata
-			occ_ram_clk2_clk                      : in    std_logic                     := 'X';             -- clk
-			occ_ram_reset2_reset                  : in    std_logic                     := 'X';             -- reset
-			occ_ram_reset2_reset_req              : in    std_logic                     := 'X'              -- reset_req
+			reset_reset_n                         : in    std_logic                     := 'X'              -- reset_n
 		);
 	end component soc_system;
 
@@ -161,15 +161,15 @@
 			memory_mem_odt                        => CONNECTED_TO_memory_mem_odt,                        --                               .mem_odt
 			memory_mem_dm                         => CONNECTED_TO_memory_mem_dm,                         --                               .mem_dm
 			memory_oct_rzqin                      => CONNECTED_TO_memory_oct_rzqin,                      --                               .oct_rzqin
-			reset_reset_n                         => CONNECTED_TO_reset_reset_n,                         --                          reset.reset_n
+			occ_ram_clk2_clk                      => CONNECTED_TO_occ_ram_clk2_clk,                      --                   occ_ram_clk2.clk
+			occ_ram_reset2_reset                  => CONNECTED_TO_occ_ram_reset2_reset,                  --                 occ_ram_reset2.reset
+			occ_ram_reset2_reset_req              => CONNECTED_TO_occ_ram_reset2_reset_req,              --                               .reset_req
 			occ_ram_s2_address                    => CONNECTED_TO_occ_ram_s2_address,                    --                     occ_ram_s2.address
 			occ_ram_s2_chipselect                 => CONNECTED_TO_occ_ram_s2_chipselect,                 --                               .chipselect
 			occ_ram_s2_clken                      => CONNECTED_TO_occ_ram_s2_clken,                      --                               .clken
 			occ_ram_s2_write                      => CONNECTED_TO_occ_ram_s2_write,                      --                               .write
 			occ_ram_s2_readdata                   => CONNECTED_TO_occ_ram_s2_readdata,                   --                               .readdata
 			occ_ram_s2_writedata                  => CONNECTED_TO_occ_ram_s2_writedata,                  --                               .writedata
-			occ_ram_clk2_clk                      => CONNECTED_TO_occ_ram_clk2_clk,                      --                   occ_ram_clk2.clk
-			occ_ram_reset2_reset                  => CONNECTED_TO_occ_ram_reset2_reset,                  --                 occ_ram_reset2.reset
-			occ_ram_reset2_reset_req              => CONNECTED_TO_occ_ram_reset2_reset_req               --                               .reset_req
+			reset_reset_n                         => CONNECTED_TO_reset_reset_n                          --                          reset.reset_n
 		);
 

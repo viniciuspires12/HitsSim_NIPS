@@ -1,55 +1,32 @@
 # ===== Config =====
-TARGET  := change_memory
-CSRCS   := main.c
+TARGET := change_memory_v2
+SRC    := main.c   # ajuste se seu arquivo tiver outro nome
 
-# Toolchain ARM hard-float
-ARCH    ?= arm-linux-gnueabihf
-CC      := $(ARCH)-gcc
-LD      := $(ARCH)-gcc
-SIZE    := $(ARCH)-size
+# Use MUSL (1=recomendado, 0=glibc estática)
+USE_MUSL ?= 0
 
-# Sysroot (copiado da placa: /lib, /usr/lib, /usr/include)
-SYSROOT ?= $(HOME)/de10-sysroot
-DYNLD   ?= /lib/ld-linux-armhf.so.3
+ifeq ($(USE_MUSL),1)
+  # musl toolchain (baixe de https://musl.cc e ajuste o caminho abaixo)
+  ARCH        := arm-linux-musleabihf
+  TOOLPREFIX  ?= $(HOME)/toolchains/arm-linux-musleabihf-cross/bin
+  CC          := $(TOOLPREFIX)/$(ARCH)-gcc
+  LD          := $(CC)
+else
+  # glibc cross (requer: sudo apt install gcc-arm-linux-gnueabihf libc6-dev-armhf-cross)
+  ARCH := arm-linux-gnueabihf
+  CC   := $(ARCH)-gcc
+  LD   := $(ARCH)-gcc
+endif
 
-# Flags
-CFLAGS  := -O2 -g -std=gnu99 -Wall --sysroot=$(SYSROOT)
-LDFLAGS := -O2 -g -Wall --sysroot=$(SYSROOT) \
-           -Wl,-rpath-link,$(SYSROOT)/lib -Wl,-rpath-link,$(SYSROOT)/usr/lib \
-           -L$(SYSROOT)/lib -L$(SYSROOT)/usr/lib \
-           -Wl,--dynamic-linker=$(DYNLD)
+CFLAGS  := -O2 -g -std=gnu99 -Wall
+LDFLAGS := -static -s
 
-# (Opcional) Se usar hwlib/hps_0.h, habilite e ajuste caminho:
-# ALT_DEVICE_FAMILY := soc_cv_av
-# HWLIBS_ROOT      ?= $(SOCEDS_DEST_ROOT)/ip/altera/hps/altera_hps/hwlib
-# CFLAGS           += -I$(HWLIBS_ROOT)/include -I$(HWLIBS_ROOT)/include/$(ALT_DEVICE_FAMILY) -D$(ALT_DEVICE_FAMILY)
+all: $(TARGET)
 
-# ===== Build dirs =====
-BUILDDIR := build
-OBJDIR   := $(BUILDDIR)/obj
-OBJS     := $(addprefix $(OBJDIR)/,$(CSRCS:.c=.o))
-
-# ===== Targets =====
-all: build size
-
-build: builddirs $(BUILDDIR)/$(TARGET)
-
-builddirs:
-	@mkdir -p $(BUILDDIR) $(OBJDIR)
-
-$(BUILDDIR)/$(TARGET): $(OBJS)
-	@echo Linking $@
-	@$(LD) $(LDFLAGS) -o $@ $(OBJS)
-
-$(OBJDIR)/%.o: %.c
-	@mkdir -p $(dir $@)
-	@echo Compiling $<
-	@$(CC) $(CFLAGS) -c -o $@ $<
-
-size: $(BUILDDIR)/$(TARGET)
-	@echo; $(SIZE) $^
+$(TARGET): $(SRC)
+	@echo "CC = $(CC)"
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
 clean:
-	@rm -rf $(BUILDDIR) *.o *~ $(TARGET) $(TARGET).*
-
-.PHONY: all build clean size builddirs
+	rm -f $(TARGET)
+.PHONY: all clean
