@@ -46,29 +46,48 @@ module FPGA_Simulator_v1_PZC
 	output signed [PZC_OUT_BITS-1:0] pzc_out
 );
 
-// ===== RAM s2: ler endereço 0 e usar como occupancy =====
-localparam [6:0] OCC_ADDR = 7'd0;
+// ===== RAM s2: FSM p/ índice em 0x7F e valor em idx =====
+localparam [6:0] IDX_ADDR = 7'h7F;
 
-reg                  rd_d1;
+reg [1:0] fsm;
+reg [6:0] idx_q;
 reg [RAND_BITS_HITS-1:0] occupancy_cfg;
 
 always @(posedge clk or posedge rst) begin
   if (rst) begin
+    fsm           <= 2'd0;
     ram_addr      <= 7'd0;
     ram_read      <= 1'b0;
-    rd_d1         <= 1'b0;
+    idx_q         <= 7'd0;
     occupancy_cfg <= {RAND_BITS_HITS{1'b0}};
   end else begin
-    ram_addr <= OCC_ADDR;
-    ram_read <= 1'b1;          // leitura contínua (ok para on-chip)
-    rd_d1    <= ram_read;      // latência de 1 ciclo
+    ram_read <= 1'b0;  // default
 
-    if (rd_d1) begin
-      occupancy_cfg <= ram_rdata[RAND_BITS_HITS-1:0];
-    end
+    case (fsm)
+      2'd0: begin
+        // Passo 1: ler índice em 0x7F
+        ram_addr <= IDX_ADDR;
+        ram_read <= 1'b1;        // dado válido no próximo ciclo
+        fsm      <= 2'd1;
+      end
+
+      2'd1: begin
+        // Captura idx lido e já dispara leitura do valor em idx
+        idx_q    <= (ram_rdata[6:0] == 7'd127) ? 7'd126 : ram_rdata[6:0]; // evita 127
+        ram_addr <= (ram_rdata[6:0] == 7'd127) ? 7'd126 : ram_rdata[6:0];
+        ram_read <= 1'b1;        // dado válido no próximo ciclo
+        fsm      <= 2'd2;
+      end
+
+      2'd2: begin
+        // Captura ocupação (valor da tabela)
+        occupancy_cfg <= ram_rdata[RAND_BITS_HITS-1:0];
+        fsm           <= 2'd0;   // repete continuamente
+      end
+    endcase
   end
 end
-// ===== fim bloco RAM s2 =====
+// ===== fim FSM =====
 
 
 

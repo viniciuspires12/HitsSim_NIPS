@@ -73,16 +73,16 @@ module soc_system (
 	memory_mem_odt,
 	memory_mem_dm,
 	memory_oct_rzqin,
-	reset_reset_n,
+	occ_ram_clk2_clk,
+	occ_ram_reset2_reset,
+	occ_ram_reset2_reset_req,
 	occ_ram_s2_address,
 	occ_ram_s2_chipselect,
 	occ_ram_s2_clken,
 	occ_ram_s2_write,
 	occ_ram_s2_readdata,
 	occ_ram_s2_writedata,
-	occ_ram_clk2_clk,
-	occ_ram_reset2_reset,
-	occ_ram_reset2_reset_req);	
+	reset_reset_n);	
 
 	input	[1:0]	button_pio_external_connection_export;
 	input		clk_clk;
@@ -157,14 +157,14 @@ module soc_system (
 	output		memory_mem_odt;
 	output	[3:0]	memory_mem_dm;
 	input		memory_oct_rzqin;
-	input		reset_reset_n;
+	input		occ_ram_clk2_clk;
+	input		occ_ram_reset2_reset;
+	input		occ_ram_reset2_reset_req;
 	input	[6:0]	occ_ram_s2_address;
 	input		occ_ram_s2_chipselect;
 	input		occ_ram_s2_clken;
 	input		occ_ram_s2_write;
 	output	[7:0]	occ_ram_s2_readdata;
 	input	[7:0]	occ_ram_s2_writedata;
-	input		occ_ram_clk2_clk;
-	input		occ_ram_reset2_reset;
-	input		occ_ram_reset2_reset_req;
+	input		reset_reset_n;
 endmodule

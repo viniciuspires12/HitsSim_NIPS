@@ -336,9 +336,10 @@ assign LED[0] = led_level;
 		.noise_out(noise_out),
 		.pedestal_out(pedestal_out),
 		.pzc_out(pzc_out),
-		  .ram_addr (occ_addr),
-		  .ram_read (occ_cs),
-        .ram_rdata(occ_rdata)
+		
+		.ram_addr (occ_addr),
+		.ram_read (occ_cs),
+      .ram_rdata(occ_rdata)
 		 
 	);
 
