@@ -43,15 +43,14 @@ Repositório do **Simulador de Pulsos TileCal** para a **DE10-Nano (Cyclone V So
 7. **Descubra o IP** da placa (via **IP Scanner** ou pela **COM/serial**).  
 8. **Conecte via SSH** para se comunicar com a placa.  
 9. **Credenciais**: **Login** `root` | **Senha** `simhits`.  
-10. No SSH, execute: `./change_occupancy`  
-11. **Para alterar a occupancy ou o offset**, siga o **menu do programa**.
+10. No SSH, execute: `./<nome_do_script>`  
 
 ### C. Visualizar no Quartus/SignalTap
-12. **Abra o projeto no Quartus** no seu computador.  
-13. Conecte a placa na porta **USB-Blaster II**.  
-14. No Quartus, vá em **Files** e abra **`stp1.stp`** (SignalTap).  
-15. **Confira** se a **JTAG Chain Configuration** está correta.  
-16. Clique em **Autorun Analysis**. Agora é possível **ver a occupancy mudando** em tempo real enquanto usa o comando SSH.  
+11. **Abra o projeto no Quartus** no seu computador.  
+12. Conecte a placa na porta **USB-Blaster II**.  
+13. No Quartus, vá em **Tools** e abra o **Signal Tap Logic Analyser**.  
+14. **Configure os sinais a serem analisados**.  
+15. Clique em **Autorun Analysis**. Agora é possível **ver os sinais** em tempo real enquanto usa o comando SSH.  
 
 > **Nota:** Mais detalhes e explicações serão adicionados.
 
@@ -65,6 +64,7 @@ Repositório do **Simulador de Pulsos TileCal** para a **DE10-Nano (Cyclone V So
 │  ├─ Simulador_Arquivos/                 # Arquivos para o Gerador de Pulsos
 │  ├─ pll_40mhz/                          # Gerador de Clock de 40MHz
 │  ├─ pll_40mhz_sim/                      # Gerador de Clock de 40MHz
+|  ├─ toolchain/                          # Arquivos necessários para a compilação do script no Linux                     
 │  └─ .../                                # Demais arquivos gerados na compilação do Quartus
 ├─ linux_image/                           # Imagem Linux p/ HPS (SD) com programas/scripts prontos
 │  └─ README.md                           # Passo a passo para criar SD "bootável" e iniciar a placa
@@ -80,8 +80,7 @@ Repositório do **Simulador de Pulsos TileCal** para a **DE10-Nano (Cyclone V So
 ---
 
 ## Fluxos comuns
-- **Alterar ocupação/offset**: SSH → `./change_occupancy` → seguir o menu.  
-- **Visualizar sinais**: abrir `stp1.stp` no Quartus → **Autorun Analysis**.
+
 
 ---
 
