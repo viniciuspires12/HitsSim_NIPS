@@ -25,7 +25,6 @@
 
 - **Porta A (FPGA):** leitura síncrona pelo simulador (uma amostra por ciclo previsto).
 - **Porta B (HPS/LW):** escrita/leitura pelo Linux (user space).  
-- **Protocolo de dado:** 16 bits, **mesma escala da v2** (use a mesma convenção numérica que você já usava nas `.mif`).
 
 > ⚠️ Recomendações:
 > - Respeite **0 ≤ addr ≤ 1023**.
